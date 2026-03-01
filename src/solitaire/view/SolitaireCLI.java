@@ -3,6 +3,7 @@ package solitaire.view;
 import solitaire.domain.Board;
 import solitaire.service.BoardService;
 import solitaire.service.PrintService;
+import solitaire.service.WinCheckerService;
 
 import java.util.Scanner;
 
@@ -19,7 +20,7 @@ public class SolitaireCLI {
         Board board = boardService.create();
         boolean running = true;
 
-        while (running && !boardService.isWin(board)) {
+        while (running && !WinCheckerService.isWin(board)) {
             System.out.println(PrintService.print(board));
             System.out.println("Enter move (source target) or 'q' to quit:");
             String input = scanner.nextLine().trim();
@@ -45,7 +46,7 @@ public class SolitaireCLI {
                 System.out.println("Invalid move!");
             }
         }
-        if(boardService.isWin(board)){
+        if(WinCheckerService.isWin(board)){
             System.out.println("You are the Winner!");
         }
         System.out.println("Thanks for playing!");

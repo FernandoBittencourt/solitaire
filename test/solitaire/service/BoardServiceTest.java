@@ -8,12 +8,15 @@ import java.util.Random;
 
 public class BoardServiceTest {
 
+
     @Test
     void validate(){
         var board = BoardFixture.createFixedBoard();
         var random=new Random();
         var deckService = new DeckService(random);
-        var boardService = new BoardService(deckService);
+        var boardMoverService = new BoardMoverService(deckService);
+        var boardBuilderService = new BoardBuilderService(deckService);
+        var boardService = new BoardService(boardMoverService, boardBuilderService);
 
         boardService.update(board, 6, 10);
 
@@ -27,7 +30,9 @@ public class BoardServiceTest {
         var board = BoardFixture.createFixedBoard();
         var random=new Random();
         var deckService = new DeckService(random);
-        var boardService = new BoardService(deckService);
+        var boardMoverService = new BoardMoverService(deckService);
+        var boardBuilderService = new BoardBuilderService(deckService);
+        var boardService = new BoardService(boardMoverService, boardBuilderService);
 
         boardService.update(board, 1, 2);
 
