@@ -4,10 +4,9 @@ import solitaire.domain.Card;
 import solitaire.domain.Suit;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
-
-import static java.util.Collections.shuffle;
 
 public class DeckService {
 
@@ -35,6 +34,6 @@ public class DeckService {
     }
 
     private void shuffle(List<Card> deck){
-
+        Collections.shuffle(deck, random);
     }
 }
