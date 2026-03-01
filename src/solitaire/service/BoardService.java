@@ -25,7 +25,11 @@ public class BoardService {
         for(int i=1; i<=7;i++){
             var list = new ArrayList<Card>();
             for(int j=0;j<i; j++){
-                list.add(deck.remove(deck.size()-1));
+                var card = deck.remove(deck.size()-1);
+                if(j!=i-1){
+                    card.setIsReveled(false);
+                }
+                list.add(card);
             }
             lists.add(list);
         }
@@ -147,7 +151,11 @@ public class BoardService {
         } else if(position>=1 && position<=7){
             var list = board.getLists().get(position-1);
             if(!list.isEmpty()){
-                return Optional.of(list.remove(list.size()-1));
+                var removedCard = list.remove(list.size() - 1);
+                if(!list.isEmpty()){
+                    list.get(list.size() - 1).setIsReveled(true);
+                }
+                return Optional.of(removedCard);
             }
         } else {
             var stacks = board.getStacks();

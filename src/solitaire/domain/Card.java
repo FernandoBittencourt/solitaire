@@ -3,6 +3,7 @@ package solitaire.domain;
 public class Card {
     private final int value;
     private final Suit suit;
+    private boolean isReveled;
 
     public Card(int value, Suit suit){
         if(suit==null){
@@ -13,6 +14,7 @@ public class Card {
         }
         this.value=value;
         this.suit=suit;
+        this.isReveled=true;
     }
 
     public int getValue() {
@@ -21,6 +23,14 @@ public class Card {
 
     public Suit getSuit(){
         return suit;
+    }
+
+    public boolean getIsReveled(){
+        return isReveled;
+    }
+
+    public void setIsReveled(boolean isReveled){
+        this.isReveled=isReveled;
     }
 
     public boolean isRed(){
@@ -32,7 +42,11 @@ public class Card {
 
 
     public String getSymbol(){
-        return getSymbolNumber()+getSymbolSuit();
+        if(isReveled) {
+            return getSymbolNumber() + getSymbolSuit();
+        } else {
+            return "**";
+        }
     }
     private String getSymbolNumber(){
         if(value == 1){
