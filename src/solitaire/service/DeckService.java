@@ -12,9 +12,8 @@ public class DeckService {
 
     private final Random random;
 
-
-    public DeckService(long seed){
-        random=new Random(seed);
+    public DeckService(Random random){
+        this.random=random;
     }
 
     public List<Card> generate(){
@@ -35,5 +34,13 @@ public class DeckService {
 
     private void shuffle(List<Card> deck){
         Collections.shuffle(deck, random);
+    }
+
+    public void nextCard(List<Card> deck){
+        if(deck.isEmpty()){
+            throw new IllegalArgumentException();
+        }
+        var card = deck.remove(deck.size()-1);
+        deck.add(0, card);
     }
 }

@@ -1,17 +1,15 @@
 import solitaire.service.BoardService;
 import solitaire.service.DeckService;
-import solitaire.service.PrintService;
+import solitaire.view.SolitaireCLI;
+
+import java.util.Random;
 
 public class Main {
     public static void main(String[] args) {
-
         System.out.println("** Solitaire **");
-        var deckService = new DeckService(11L);
-        var boardService = new BoardService(deckService);
-        var board = boardService.create();
-        System.out.println(PrintService.print(board));
-
-
-
+        var random=new Random();
+        DeckService deckService = new DeckService(random);
+        BoardService boardService = new BoardService(deckService);
+        new SolitaireCLI(boardService).start();
     }
 }

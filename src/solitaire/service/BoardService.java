@@ -25,7 +25,7 @@ public class BoardService {
         for(int i=1; i<=7;i++){
             var list = new ArrayList<Card>();
             for(int j=0;j<i; j++){
-                list.add(deck.remove(deck.toArray().length-1));
+                list.add(deck.remove(deck.size()-1));
             }
             lists.add(list);
         }
@@ -49,17 +49,21 @@ public class BoardService {
      * @param target the index of the target position where the card will be placed
      */
     public void update(Board board, int source, int target){
-        if(source<0 || source>11){
-            throw new IllegalArgumentException();
-        }
-        if(target<1 || target>11){
-            throw new IllegalArgumentException();
-        }
-        if(!validateMove(board, source, target)){
-            throw new IllegalArgumentException();
-        }
+        if(target==0 && source==0){
+            deckService.nextCard(board.getDeck());
+        } else {
+            if (source < 0 || source > 11) {
+                throw new IllegalArgumentException();
+            }
+            if (target < 1 || target > 11) {
+                throw new IllegalArgumentException();
+            }
+            if (!validateMove(board, source, target)) {
+                throw new IllegalArgumentException();
+            }
 
-        move(board, source, target);
+            move(board, source, target);
+        }
     }
 
     private void move(Board board, int source, int target) {
@@ -69,16 +73,16 @@ public class BoardService {
 
     private void addCardOnBoard(Board board, Card card, int position) {
         if(position>=1 && position<=7){
-            var list = board.getLists().get(position-1).add(card);
+            board.getLists().get(position-1).add(card);
         } else {
             var stacks = board.getStacks();
-            if(position==8 && !stacks.getHeart().isEmpty()){
+            if(position==8){
                 stacks.getHeart().push(card);
-            } else if(position==9 && !stacks.getDiamond().isEmpty()){
+            } else if(position==9){
                 stacks.getDiamond().push(card);
-            } else if(position==10 && !stacks.getClub().isEmpty()){
+            } else if(position==10){
                 stacks.getClub().push(card);
-            } else if(position==11 && !stacks.getSpade().isEmpty()){
+            } else if(position==11) {
                 stacks.getSpade().push(card);
             }
         }
@@ -94,7 +98,7 @@ public class BoardService {
             if(cardSource.get().getValue()==13 && cardTarget.isEmpty()){
                 return true;
             }
-            if(cardSource.get().getValue()!=cardTarget.get().getValue()+1){
+            if(cardSource.get().getValue()!=cardTarget.get().getValue()-1){
                 return false;
             }
             return cardSource.get().isRed()!= cardTarget.get().isRed();
@@ -158,5 +162,13 @@ public class BoardService {
             }
         }
         return Optional.empty();
+    }
+
+    public boolean isWin(Board board){
+        var stacks = board.getStacks();
+        return (!stacks.getHeart().isEmpty() && stacks.getHeart().peek().getValue() == 13) &&
+                (!stacks.getDiamond().isEmpty() && stacks.getDiamond().peek().getValue() == 13) &&
+                (!stacks.getClub().isEmpty() && stacks.getClub().peek().getValue() == 13) &&
+                (!stacks.getSpade().isEmpty() && stacks.getSpade().peek().getValue() == 13);
     }
 }
