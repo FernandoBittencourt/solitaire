@@ -42,9 +42,21 @@ public class BoardService {
         printStacks(s, board.getStacks());
         s.append("\n");
 
+        printLists(s, board.getLists());
+        s.append("\n");
         return s.toString();
 
     }
+
+    private void printLists(StringBuilder s, List<List<Card>> lists) {
+        for(var list: lists){
+            for (Card card : list) {
+                s.append(card.getSymbol()).append("  ");
+            }
+            s.append("\n");
+        }
+    }
+
     private void printStacks(StringBuilder s, BoardStack stacks){
 
         if(!stacks.getHeart().isEmpty()) {
