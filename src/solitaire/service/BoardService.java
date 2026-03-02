@@ -36,4 +36,11 @@ public class BoardService {
         boardMoverService.update(board, source, target);
     }
 
+    public Board load() {
+        return boardBuilderService.load();
+    }
+
+    public void save(Board board) {
+        boardBuilderService.save(board);
+    }
 }

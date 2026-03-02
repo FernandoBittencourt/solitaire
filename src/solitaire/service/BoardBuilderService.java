@@ -2,21 +2,27 @@ package solitaire.service;
 
 import solitaire.domain.Board;
 import solitaire.domain.Card;
+import solitaire.repository.BoardRepository;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class BoardBuilderService {
     private final DeckService deckService;
-
-    public BoardBuilderService(DeckService deckService){
+    private final BoardRepository repository;
+    public BoardBuilderService(DeckService deckService, BoardRepository repository){
         this.deckService = deckService;
+        this.repository = repository;
     }
 
     public Board create(){
         var deck = deckService.generate();
         var lists = createLists(deck);
         return new Board(deck, lists);
+    }
+
+    public Board load(){
+        return repository.load();
     }
 
     private List<List<Card>> createLists(List<Card> deck){
@@ -35,4 +41,7 @@ public class BoardBuilderService {
         return lists;
     }
 
+    public void save(Board board) {
+        repository.save(board);
+    }
 }

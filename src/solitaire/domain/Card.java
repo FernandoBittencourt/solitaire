@@ -34,20 +34,14 @@ public class Card {
     }
 
     public boolean isRed(){
-        if(Suit.HEART.equals(suit) || Suit.DIAMOND.equals(suit)){
-            return true;
-        }
-        return false;
+        return Suit.HEART.equals(suit) || Suit.DIAMOND.equals(suit);
     }
 
 
     public String getSymbol(){
-        if(isReveled) {
-            return getSymbolNumber() + getSymbolSuit();
-        } else {
-            return "**";
-        }
+        return getSymbolNumber() + getSymbolSuit();
     }
+
     private String getSymbolNumber(){
         if(value == 1){
             return "A";

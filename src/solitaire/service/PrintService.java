@@ -27,7 +27,7 @@ public class PrintService {
     private static void printLists(StringBuilder s, List<List<Card>> lists) {
         for(var list: lists){
             for (Card card : list) {
-                s.append(card.getSymbol()).append("  ");
+                s.append(card.getIsReveled()? card.getSymbol() : "**").append("  ");
             }
             s.append("\n");
         }

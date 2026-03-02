@@ -3,6 +3,7 @@ package solitaire.service;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import solitaire.fixture.BoardFixture;
+import solitaire.repository.BoardRepository;
 
 import java.util.Random;
 
@@ -15,7 +16,8 @@ public class BoardServiceTest {
         var random=new Random();
         var deckService = new DeckService(random);
         var boardMoverService = new BoardMoverService(deckService);
-        var boardBuilderService = new BoardBuilderService(deckService);
+        var boardRepository = new BoardRepository("test.txt");
+        var boardBuilderService = new BoardBuilderService(deckService, boardRepository);
         var boardService = new BoardService(boardMoverService, boardBuilderService);
 
         boardService.update(board, 6, 10);
@@ -31,7 +33,8 @@ public class BoardServiceTest {
         var random=new Random();
         var deckService = new DeckService(random);
         var boardMoverService = new BoardMoverService(deckService);
-        var boardBuilderService = new BoardBuilderService(deckService);
+        var boardRepository = new BoardRepository("test.txt");
+        var boardBuilderService = new BoardBuilderService(deckService, boardRepository);
         var boardService = new BoardService(boardMoverService, boardBuilderService);
 
         boardService.update(board, 1, 2);
